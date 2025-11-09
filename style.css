@@ -1,0 +1,19 @@
+.calc-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    width: 240px;
+    height: 60px;
+    display: flex;
+}
+
+.calc-button {
+    flex: 1;
+}
+
+#display {
+    width: 100%;
+    box-sizing: border-box;
+}
