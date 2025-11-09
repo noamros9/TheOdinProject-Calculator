@@ -1,0 +1,28 @@
+#calc-grid {
+    width: 240px;
+    height: 60px;
+}
+
+.row {
+    display: flex;
+}
+
+.calc-button {
+    width: 25%;
+    flex-grow: 1;
+    padding: 2px;
+    margin: 2px;
+    box-sizing: border-box;
+    border: 2px groove black;
+    border-radius: 5px;
+    font-size: 1.5rem;
+}
+
+#display {
+    width: 75%;
+    box-sizing: border-box;
+    margin: 2px;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 1.5rem;
+}
