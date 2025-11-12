@@ -36,7 +36,6 @@ function operClicked(e) {
         expression.pop();
         expression.push(e.target.textContent);
     }
-    // TO-DO consecutive clicks on same oper (should not add to expression), or different (count the last)
 }
 
 function equalClicked(e) {
