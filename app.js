@@ -1,4 +1,5 @@
-let experssion = "";
+let expression = [];
+let operPressedFlag = false;
 
 function calc(a, b, oper) {
     switch (oper) {
@@ -14,34 +15,45 @@ function calc(a, b, oper) {
 }
 
 function operator(expression) {
-    let splitExpression = expression.split(/(\+|\-|\/|X)/);
-    console.log(splitExpression);
+    return calc(parseInt(expression[0]), parseInt(expression[2]), expression[1]);
 }
 
 function digitClicked(e) {
     const display = document.querySelector("#display");
     display.value += e.target.textContent;
+    operPressedFlag = false;
 }
 
 function operClicked(e) {
     const display = document.querySelector("#display");
-    experssion += display.value;
-    experssion += e.target.textContent;
-    display.value = "";
+    if (!operPressedFlag) {
+        expression.push(display.value);
+        expression.push(e.target.textContent);
+        display.value = "";
+        display.placeholder = "";
+        operPressedFlag = true;
+    } else {
+        expression.pop();
+        expression.push(e.target.textContent);
+    }
+    // TO-DO consecutive clicks on same oper (should not add to expression), or different (count the last)
 }
 
 function equalClicked(e) {
     const display = document.querySelector("#display");
-    experssion += display.value;
-    display.value = "";
-    operator(experssion);
-    // TO-DO OPERATION OF CALC
+    operPressedFlag = false;
+    expression.push(display.value);
+    const res = operator(expression);
+    expression = [];
+    display.value = res.toString();
 }
 
 function clearClicked(e) {
     const display = document.querySelector("#display");
-    experssion = "";
+    operPressedFlag = false;
+    expression = [];
     display.value = "";
+    display.placeholder = "0";
 }
 
 function setupCalculator() {
