@@ -51,14 +51,14 @@ function operClicked(e) {
 
 function negateClicked(e) {
     const display = document.querySelector("#display");
-    if (display.value !== "") {
+    if (display.value !== "" && expression.length % 2 === 0) {
         expression.push(display.value);
     }
     if (expression.length % 2 === 1) {
         if (parseFloat(expression[expression.length - 1]) > 0) {
             expression[expression.length - 1] = `-${expression[expression.length - 1]}`;
         } else if (parseFloat(expression[expression.length - 1]) < 0) {
-            expression[expression.length - 1] = `${expression[expression.length - 1]}`;
+            expression[expression.length - 1] = `${(expression[expression.length - 1]).slice(1)}`;
         }
         display.value = expression[expression.length - 1];
     }

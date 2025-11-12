@@ -13,7 +13,7 @@
     padding: 2px;
     margin: 2px;
     box-sizing: border-box;
-    border: 2px groove black;
+    border: 0.5px groove black;
     border-radius: 5px;
     font-size: 1.5rem;
 }
@@ -25,4 +25,13 @@
     border: 2px solid black;
     border-radius: 5px;
     font-size: 1.5rem;
+}
+
+button {
+    background-color: #f9f7ef;
+}
+
+button:active {
+    transform: scale(0.98) translateY(2px);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
