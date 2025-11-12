@@ -1,6 +1,6 @@
 #calc-grid {
-    width: 240px;
-    height: 60px;
+    width: 360px;
+    height: 450px;
 }
 
 .row {
@@ -19,7 +19,7 @@
 }
 
 #display {
-    width: 75%;
+    width: 51%;
     box-sizing: border-box;
     margin: 2px;
     border: 2px solid black;
