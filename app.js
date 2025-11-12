@@ -32,7 +32,9 @@ function digitClicked(e) {
 function operClicked(e) {
     const display = document.querySelector("#display");
     if (!operPressedFlag) {
-        expression.push(display.value);
+        if (expression.length % 2 === 0) {
+            expression.push(display.value);
+        }
         if (expression.length === 3) {
             const res = operator(expression).toString();
             expression = [res];
@@ -44,6 +46,21 @@ function operClicked(e) {
     } else {
         expression.pop();
         expression.push(e.target.textContent);
+    }
+}
+
+function negateClicked(e) {
+    const display = document.querySelector("#display");
+    if (display.value !== "" && expression.length % 2 === 0) {
+        expression.push(display.value);
+    }
+    if (expression.length % 2 === 1) {
+        if (parseFloat(expression[expression.length - 1]) > 0) {
+            expression[expression.length - 1] = `-${expression[expression.length - 1]}`;
+        } else if (parseFloat(expression[expression.length - 1]) < 0) {
+            expression[expression.length - 1] = `${(expression[expression.length - 1]).slice(1)}`;
+        }
+        display.value = expression[expression.length - 1];
     }
 }
 
@@ -75,6 +92,9 @@ function setupCalculator() {
         button.addEventListener("click", (e) => operClicked(e));
     })
 
+    const negateButton = document.querySelector("#negate-button");
+    negateButton.addEventListener("click", (e) => negateClicked(e));
+
     const equalButton = document.querySelector("#equal-button");
     equalButton.addEventListener("click", (e) => equalClicked(e));
 
@@ -92,3 +112,4 @@ main();
 //TO-DO
 //refresh display screen when a button is pushed
 //add a minus button (turn the plus oper to plus/minus button)
+//highlight what operation is selected
