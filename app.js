@@ -15,23 +15,32 @@ function calc(a, b, oper) {
 }
 
 function operator(expression) {
-    return calc(parseInt(expression[0]), parseInt(expression[2]), expression[1]);
+    return calc(parseFloat(expression[0]), parseFloat(expression[2]), expression[1]);
 }
 
 function digitClicked(e) {
     const display = document.querySelector("#display");
+    if (operPressedFlag) {
+        display.value = "";
+        display.placeholder = "";
+    }
     display.value += e.target.textContent;
     operPressedFlag = false;
+
 }
 
 function operClicked(e) {
     const display = document.querySelector("#display");
     if (!operPressedFlag) {
         expression.push(display.value);
+        if (expression.length === 3) {
+            const res = operator(expression).toString();
+            expression = [res];
+            display.value = res;
+        }
         expression.push(e.target.textContent);
-        display.value = "";
-        display.placeholder = "";
         operPressedFlag = true;
+
     } else {
         expression.pop();
         expression.push(e.target.textContent);
@@ -44,7 +53,7 @@ function equalClicked(e) {
     expression.push(display.value);
     const res = operator(expression);
     expression = [];
-    display.value = res.toString();
+    display.value = (Math.round(res * 100000) / 100000).toString();
 }
 
 function clearClicked(e) {
@@ -80,3 +89,6 @@ function main() {
 main();
 
 
+//TO-DO
+//refresh display screen when a button is pushed
+//add a minus button (turn the plus oper to plus/minus button)
