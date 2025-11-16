@@ -18,6 +18,28 @@ function operator(expression) {
     return calc(parseFloat(expression[0]), parseFloat(expression[2]), expression[1]);
 }
 
+function freeButtons(buttonName = "both") {
+    const decimalButton = document.querySelector("#decimal-button");
+    const decimalClicked = true ? decimalButton.classList.contains("decimal-clicked") : false;
+    switch (buttonName) {
+        case "decimal":
+            if (decimalClicked) {
+                decimalButton.classList.remove("decimal-clicked");
+                decimalButton.disabled = false;
+            }
+            break;
+        case "oper":
+            operPressedFlag = false;
+            break;
+        case "both":
+            if (decimalClicked) {
+                decimalButton.classList.remove("decimal-clicked");
+                decimalButton.disabled = false;
+            }
+            operPressedFlag = false;
+    }
+}
+
 function digitClicked(e) {
     const display = document.querySelector("#display");
     if (operPressedFlag) {
@@ -25,8 +47,17 @@ function digitClicked(e) {
         display.placeholder = "";
     }
     display.value += e.target.textContent;
-    operPressedFlag = false;
+    freeButtons("oper");
+}
 
+function decimalClicked(e) {
+    const display = document.querySelector("#display");
+    if (!e.target.classList.contains('decimal-clicked')) {
+        display.value += e.target.textContent;
+        e.target.disabled = true;
+        e.target.classList.add('decimal-clicked');
+    }
+    freeButtons("oper");
 }
 
 function operClicked(e) {
@@ -47,6 +78,7 @@ function operClicked(e) {
         expression.pop();
         expression.push(e.target.textContent);
     }
+    freeButtons("decimal");
 }
 
 function negateClicked(e) {
@@ -62,30 +94,34 @@ function negateClicked(e) {
         }
         display.value = expression[expression.length - 1];
     }
+    freeButtons("oper");
 }
 
 function equalClicked(e) {
     const display = document.querySelector("#display");
-    operPressedFlag = false;
     expression.push(display.value);
     const res = operator(expression);
     expression = [];
     display.value = (Math.round(res * 100000) / 100000).toString();
+    freeButtons();
 }
 
 function clearClicked(e) {
     const display = document.querySelector("#display");
-    operPressedFlag = false;
-    expression = [];
     display.value = "";
     display.placeholder = "0";
+    expression = [];
+    freeButtons();
 }
 
 function setupCalculator() {
-    const digitButtons = document.querySelectorAll(".digit-button, #decimal-button");
+    const digitButtons = document.querySelectorAll(".digit-button");
     digitButtons.forEach((button) => {
         button.addEventListener("click", (e) => digitClicked(e));
     })
+
+    const decimalButton = document.querySelector("#decimal-button");
+    decimalButton.addEventListener("click", (e) => decimalClicked(e));
 
     const operButtons = document.querySelectorAll(".oper-button");
     operButtons.forEach((button) => {
@@ -110,6 +146,8 @@ main();
 
 
 //TO-DO
-//refresh display screen when a button is pushed
-//add a minus button (turn the plus oper to plus/minus button)
-//highlight what operation is selected
+// only one decimal point
+// keyboard support
+// backspace?
+// make the app.js file into a js module
+// make the calculator looks nicer
