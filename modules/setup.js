@@ -26,27 +26,35 @@ function freeButtons(buttonName = "both") {
     }
 }
 
-function digitClicked(e) {
+function digitClicked(e, is_keyboard_event = false) {
     const display = document.querySelector("#display");
     if (operPressedFlag) {
         display.value = "";
         display.placeholder = "";
     }
-    display.value += e.target.textContent;
+    if (is_keyboard_event) {
+        display.value += e.key;
+    } else {
+        display.value += e.target.textContent;
+    }
     freeButtons("oper");
 }
 
-function decimalClicked(e) {
+function decimalClicked(e, is_keyboard_event = false) {
     const display = document.querySelector("#display");
     if (!e.target.classList.contains('decimal-clicked')) {
-        display.value += e.target.textContent;
+        if (is_keyboard_event) {
+            display.value += e.key;
+        } else {
+            display.value += e.target.textContent;
+        }
         e.target.disabled = true;
         e.target.classList.add('decimal-clicked');
     }
     freeButtons("oper");
 }
 
-function operClicked(e) {
+function operClicked(e, is_keyboard_event = false) {
     const display = document.querySelector("#display");
     if (!operPressedFlag) {
         if (expression.length % 2 === 0) {
@@ -57,9 +65,12 @@ function operClicked(e) {
             expression = [res];
             display.value = res;
         }
-        expression.push(e.target.textContent);
+        if (is_keyboard_event) {
+            expression.push(e.key);
+        } else {
+            expression.push(e.target.textContent);
+        }
         operPressedFlag = true;
-
     } else {
         expression.pop();
         expression.push(e.target.textContent);
@@ -109,6 +120,31 @@ function backspaceClicked(e) {
     freeButtons();
 }
 
+function setupKeyboardSupport() {
+    document.addEventListener('keydown', (e) => {
+        const is_keyboard_event = true;
+        if (e.key >= '0' && e.key <= '9') {
+            digitClicked(e, is_keyboard_event);
+        }
+        if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+            operClicked(e, is_keyboard_event);
+        }
+        if (e.key === '.') {
+            decimalClicked(e, is_keyboard_event);
+        }
+        if (e.key === 'Enter') {
+            equalClicked(e);
+        }
+        if (e.key === 'Backspace') {
+            backspaceClicked(e);
+        }
+        if (e.key === 'Delete') {
+            clearClicked(e);
+        }
+
+    })
+}
+
 function setupCalculator() {
     const digitButtons = document.querySelectorAll(".digit-button");
     digitButtons.forEach((button) => {
@@ -134,6 +170,8 @@ function setupCalculator() {
 
     const backspaceButton = document.querySelector("#backspace-button");
     backspaceButton.addEventListener("click", (e) => backspaceClicked(e));
+
+    setupKeyboardSupport();
 }
 
 

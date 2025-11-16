@@ -7,6 +7,7 @@ function calc(a, b, oper) {
         case "-":
             return a - b;
         case "X":
+        case "*":
             return a * b;
         case "/":
             return a / b;
