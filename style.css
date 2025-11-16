@@ -5,11 +5,21 @@
 
 .row {
     display: flex;
+    flex-direction: row;
+}
+
+#display {
+    width: 49%;
+    box-sizing: border-box;
+    margin: 2px;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 1.5rem;
 }
 
 .calc-button {
-    width: 25%;
-    flex-grow: 1;
+    /* width: 25%; */
+    flex: 1 1;
     padding: 2px;
     margin: 2px;
     box-sizing: border-box;
@@ -18,14 +28,6 @@
     font-size: 1.5rem;
 }
 
-#display {
-    width: 51%;
-    box-sizing: border-box;
-    margin: 2px;
-    border: 2px solid black;
-    border-radius: 5px;
-    font-size: 1.5rem;
-}
 
 button {
     background-color: #f9f7ef;

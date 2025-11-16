@@ -114,6 +114,15 @@ function clearClicked(e) {
     freeButtons();
 }
 
+function backspaceClicked(e) {
+    const display = document.querySelector("#display");
+    if (display.value.length > 0) {
+        display.value = display.value.slice(0, - 1);
+        display.placeholder = "";
+    }
+    freeButtons();
+}
+
 function setupCalculator() {
     const digitButtons = document.querySelectorAll(".digit-button");
     digitButtons.forEach((button) => {
@@ -136,6 +145,9 @@ function setupCalculator() {
 
     const clearButton = document.querySelector("#clear-button");
     clearButton.addEventListener("click", (e) => clearClicked(e));
+
+    const backspaceButton = document.querySelector("#backspace-button");
+    backspaceButton.addEventListener("click", (e) => backspaceClicked(e));
 }
 
 function main() {
@@ -145,8 +157,7 @@ function main() {
 main();
 
 
-//TO-DO
-// only one decimal point
+// TO-DO
 // keyboard support
 // backspace?
 // make the app.js file into a js module
